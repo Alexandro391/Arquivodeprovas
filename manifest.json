@@ -1,0 +1,27 @@
+{
+  "name": "Dashboard PA2 · FMC 2026.1",
+  "short_name": "Controle PA2",
+  "description": "Controle de provas PA2 da Faculdade de Medicina de Campos",
+  "start_url": "./index.html",
+  "display": "standalone",
+  "orientation": "landscape",
+  "background_color": "#f0f5f3",
+  "theme_color": "#008b61",
+  "lang": "pt-BR",
+  "icons": [
+    {
+      "src": "icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ],
+  "categories": ["education", "productivity"],
+  "screenshots": []
+}
