@@ -866,6 +866,141 @@
     50% { box-shadow: 0 0 0 6px var(--fmc-green-glow); }
   }
 
+  /* ── CARD DELETE ── */
+  .card-delete-btn {
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    border: none;
+    background: rgba(0,0,0,0.06);
+    color: var(--text-muted);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 11px;
+    cursor: pointer;
+    opacity: 0;
+    transition: var(--transition);
+    z-index: 2;
+  }
+
+  .prova-card:hover .card-delete-btn { opacity: 1; }
+  .card-delete-btn:hover { background: var(--done-badge); color: white; }
+
+  /* ── ADD PROVA ── */
+  .add-prova-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    min-height: 84px;
+    border: 1.5px dashed var(--border-focus);
+    border-radius: var(--radius);
+    background: transparent;
+    color: var(--text-muted);
+    font-family: 'Inter', sans-serif;
+    font-size: 12px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: var(--transition);
+  }
+
+  .add-prova-btn:hover {
+    background: var(--fmc-green-light);
+    border-color: var(--fmc-green);
+    color: var(--fmc-green-dark);
+  }
+
+  /* ── WEEK ROW (label + ações) ── */
+  .week-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 14px;
+  }
+
+  .week-row .week-label {
+    flex: 1;
+    min-width: 0;
+    margin-bottom: 0;
+  }
+
+  .week-actions {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    flex-shrink: 0;
+  }
+
+  .week-delete-btn {
+    border: none;
+    background: transparent;
+    color: var(--text-muted);
+    font-size: 12px;
+    cursor: pointer;
+    padding: 5px 8px;
+    border-radius: 8px;
+    transition: var(--transition);
+  }
+
+  .week-delete-btn:hover { background: var(--done); color: var(--done-badge); }
+
+  .add-week-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 8px 16px;
+    border: 1.5px dashed var(--border-focus);
+    border-radius: 100px;
+    background: transparent;
+    color: var(--text-muted);
+    font-family: 'Inter', sans-serif;
+    font-size: 12px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: var(--transition);
+  }
+
+  .add-week-btn:hover { background: var(--fmc-green-light); border-color: var(--fmc-green); color: var(--fmc-green-dark); }
+
+  /* ── PERIOD DELETE / ADD ── */
+  .period-delete-btn {
+    border: none;
+    background: transparent;
+    color: var(--text-muted);
+    font-size: 13px;
+    cursor: pointer;
+    padding: 5px 9px;
+    border-radius: 8px;
+    transition: var(--transition);
+  }
+
+  .period-delete-btn:hover { background: var(--done); color: var(--done-badge); }
+
+  .add-period-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 14px 20px;
+    border: 1.5px dashed var(--border-focus);
+    border-radius: var(--radius);
+    background: rgba(255,255,255,0.6);
+    color: var(--text-secondary);
+    font-family: 'Inter', sans-serif;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: var(--transition);
+    width: 100%;
+    margin-bottom: 24px;
+  }
+
+  .add-period-btn:hover { background: var(--fmc-green-light); border-color: var(--fmc-green); color: var(--fmc-green-dark); }
+
   /* ── EMPTY ── */
   .empty-state {
     text-align: center;
@@ -1020,7 +1155,7 @@
   <div class="toolbar">
     <div class="toolbar-left">
       <i class="fas fa-pen"></i>
-      <span><strong>Edição:</strong> clique em disciplina, data, hora ou sala para alterar</span>
+      <span><strong>Edição:</strong> clique em qualquer texto para alterar (disciplina, data, hora, sala, título de período ou semana) · use <i class="fas fa-plus"></i> para adicionar e <i class="fas fa-trash"></i> / <i class="fas fa-times"></i> para excluir provas, semanas ou períodos</span>
     </div>
     <div class="toolbar-right">
       <span class="status" id="saveState">Sem alterações</span>
@@ -1068,6 +1203,7 @@
       <button class="filter-btn" data-status="done" onclick="filterCards('farma','done',this)">Finalizadas</button>
     </div>
     <div id="farma-periods"></div>
+    <button class="add-period-btn" onclick="addPeriod('farma')"><i class="fas fa-plus"></i> Adicionar novo período</button>
   </div>
 
   <!-- ═══ ENF ═══ -->
@@ -1088,6 +1224,7 @@
       <button class="filter-btn" data-status="done" onclick="filterCards('enf','done',this)">Finalizadas</button>
     </div>
     <div id="enf-periods"></div>
+    <button class="add-period-btn" onclick="addPeriod('enf')"><i class="fas fa-plus"></i> Adicionar novo período</button>
   </div>
 
   <!-- ═══ MED ═══ -->
@@ -1108,6 +1245,7 @@
       <button class="filter-btn" data-status="done" onclick="filterCards('med','done',this)">Finalizadas</button>
     </div>
     <div id="med-periods"></div>
+    <button class="add-period-btn" onclick="addPeriod('med')"><i class="fas fa-plus"></i> Adicionar novo período</button>
   </div>
 
 </div>
@@ -1980,6 +2118,30 @@ function refreshCourseStats(course) {
 }
 
 function handleEditableBlur(el) {
+  const kind = el.dataset.kind || 'prova';
+
+  if (kind === 'periodo') {
+    const course = el.dataset.course, pidx = parseInt(el.dataset.pidx);
+    const periodo = COURSE_DATA[course]?.[pidx];
+    if (!periodo) return;
+    const val = el.textContent.trim() || periodo.periodo;
+    periodo.periodo = val;
+    el.textContent = val;
+    saveStoredData();
+    return;
+  }
+
+  if (kind === 'semana') {
+    const course = el.dataset.course, pidx = parseInt(el.dataset.pidx), sidx = parseInt(el.dataset.sidx);
+    const sem = COURSE_DATA[course]?.[pidx]?.semanas?.[sidx];
+    if (!sem) return;
+    const val = el.textContent.trim() || sem.label;
+    sem.label = val;
+    el.textContent = val;
+    saveStoredData();
+    return;
+  }
+
   const card = el.closest('.prova-card');
   if (!card) return;
   const course = card.dataset.course, pidx = parseInt(card.dataset.pidx), sidx = parseInt(card.dataset.sidx), idx = parseInt(card.dataset.idx);
@@ -2018,6 +2180,97 @@ function attachEditableHandlers() {
 }
 
 // ══════════════════════════════════════════════════════════
+//  ESTRUTURA EDITÁVEL — adicionar / excluir
+// ══════════════════════════════════════════════════════════
+
+function selectAllText(el) {
+  el.focus();
+  const range = document.createRange();
+  range.selectNodeContents(el);
+  const sel = window.getSelection();
+  sel.removeAllRanges();
+  sel.addRange(range);
+}
+
+function rerender(course) {
+  const periodsEl = document.getElementById(`${course}-periods`);
+  const collapsedIds = periodsEl ? Array.from(periodsEl.querySelectorAll('.period-group.collapsed')).map(el => el.id) : [];
+  const renderFn = { farma: renderFarma, enf: renderEnf, med: renderMed }[course];
+  if (renderFn) renderFn();
+  collapsedIds.forEach(id => document.getElementById(id)?.classList.add('collapsed'));
+  const filterContainer = document.getElementById(`${course}-filters`);
+  if (filterContainer) {
+    filterContainer.querySelectorAll('.filter-btn').forEach(b => b.classList.toggle('active', b.dataset.status === 'all'));
+  }
+}
+
+function addPeriod(course) {
+  COURSE_DATA[course].push({ periodo: 'Novo Período', semanas: [] });
+  const pidx = COURSE_DATA[course].length - 1;
+  rerender(course);
+  saveStoredData();
+  setTimeout(() => {
+    const el = document.querySelector(`.editable[data-kind="periodo"][data-course="${course}"][data-pidx="${pidx}"]`);
+    if (el) selectAllText(el);
+  }, 50);
+}
+
+function deletePeriod(course, pidx, event) {
+  event?.stopPropagation();
+  if (!confirm('Excluir este período inteiro e todas as suas semanas e provas?')) return;
+  COURSE_DATA[course].splice(pidx, 1);
+  rerender(course);
+  saveStoredData();
+}
+
+function addWeek(course, pidx, event) {
+  event?.stopPropagation();
+  const periodo = COURSE_DATA[course]?.[pidx];
+  if (!periodo) return;
+  periodo.semanas.push({ label: 'Nova Semana', provas: [] });
+  const sidx = periodo.semanas.length - 1;
+  rerender(course);
+  saveStoredData();
+  setTimeout(() => {
+    const el = document.querySelector(`.editable[data-kind="semana"][data-course="${course}"][data-pidx="${pidx}"][data-sidx="${sidx}"]`);
+    if (el) selectAllText(el);
+  }, 50);
+}
+
+function deleteWeek(course, pidx, sidx, event) {
+  event?.stopPropagation();
+  if (!confirm('Excluir esta semana inteira e todas as suas provas?')) return;
+  COURSE_DATA[course][pidx].semanas.splice(sidx, 1);
+  rerender(course);
+  saveStoredData();
+}
+
+function addProva(course, pidx, sidx, event) {
+  event?.stopPropagation();
+  const sem = COURSE_DATA[course]?.[pidx]?.semanas?.[sidx];
+  if (!sem) return;
+  const hoje = getTodayInBrasilia();
+  const dd = String(hoje.getDate()).padStart(2,'0'), mm = String(hoje.getMonth()+1).padStart(2,'0'), yyyy = hoje.getFullYear();
+  sem.provas.push({ disciplina: 'Nova disciplina', data: `${dd}/${mm}/${yyyy}`, hora: '19:00', sala: '—' });
+  const idx = sem.provas.length - 1;
+  rerender(course);
+  saveStoredData();
+  setTimeout(() => {
+    const card = document.querySelector(`.prova-card[data-course="${course}"][data-pidx="${pidx}"][data-sidx="${sidx}"][data-idx="${idx}"]`);
+    const el = card?.querySelector('.card-discipline');
+    if (el) selectAllText(el);
+  }, 50);
+}
+
+function deleteProva(course, pidx, sidx, idx, event) {
+  event?.stopPropagation();
+  if (!confirm('Excluir esta prova?')) return;
+  COURSE_DATA[course][pidx].semanas[sidx].provas.splice(idx, 1);
+  rerender(course);
+  saveStoredData();
+}
+
+// ══════════════════════════════════════════════════════════
 //  RENDER HELPERS
 // ══════════════════════════════════════════════════════════
 
@@ -2032,6 +2285,7 @@ function buildCardHtml(prova, tipo, course, pidx, sidx, idx) {
 
   return `
     <div class="prova-card ${cardClass}" data-status="${status}" data-tipo="${tipo || 'regular'}" data-course="${course}" data-pidx="${pidx}" data-sidx="${sidx}" data-idx="${idx}">
+      <button class="card-delete-btn" onclick="deleteProva('${course}',${pidx},${sidx},${idx},event)" title="Excluir prova"><i class="fas fa-times"></i></button>
       <div class="card-status">
         <span class="status-dot ${dotClass}"></span>
         <span class="status-text ${dotClass}">${label}</span>
@@ -2060,7 +2314,15 @@ function buildPeriodHtml(periodo, idx, course, color) {
 
   const weeksHtml = periodo.semanas.map((sem, si) => {
     const cards = sem.provas.map((p, pi) => buildCardHtml(p, sem.tipo, course, idx, si, pi)).join('');
-    return `<div class="week-label">${sem.label}</div><div class="provas-grid">${cards}</div>`;
+    const addCard = `<button class="add-prova-btn" onclick="addProva('${course}',${idx},${si},event)"><i class="fas fa-plus"></i> Nova prova</button>`;
+    return `
+      <div class="week-row">
+        <div class="week-label"><span class="editable" contenteditable="true" spellcheck="false" data-kind="semana" data-course="${course}" data-pidx="${idx}" data-sidx="${si}" data-field="label">${escapeHtml(sem.label)}</span></div>
+        <div class="week-actions">
+          <button class="week-delete-btn" onclick="deleteWeek('${course}',${idx},${si},event)" title="Excluir semana"><i class="fas fa-trash"></i></button>
+        </div>
+      </div>
+      <div class="provas-grid">${cards}${addCard}</div>`;
   }).join('');
 
   const toggleFn = course === 'farma' ? `togglePeriod('farma', ${idx})` :
@@ -2071,15 +2333,16 @@ function buildPeriodHtml(periodo, idx, course, color) {
     <div class="period-group" id="${course}-period-${idx}" data-course="${course}" data-pidx="${idx}">
       <div class="period-header" onclick="${toggleFn}">
         <div class="period-title">
-          ${periodo.periodo}
+          <span class="editable" contenteditable="true" spellcheck="false" onclick="event.stopPropagation()" data-kind="periodo" data-course="${course}" data-pidx="${idx}" data-field="periodo">${escapeHtml(periodo.periodo)}</span>
           <span class="period-badge" style="color:${color};border-color:${color}44;background:${color}11">${course === 'farma' ? 'Farmácia' : course === 'enf' ? 'Enfermagem' : 'Medicina'}</span>
         </div>
         <div style="display:flex;align-items:center;gap:10px;">
           <div class="period-stats" id="${course}-period-stats-${idx}">${statsHtml}</div>
+          <button class="period-delete-btn" onclick="deletePeriod('${course}',${idx},event)" title="Excluir período"><i class="fas fa-trash"></i></button>
           <span class="chevron">▾</span>
         </div>
       </div>
-      <div class="period-body">${weeksHtml}</div>
+      <div class="period-body">${weeksHtml}<button class="add-week-btn" onclick="addWeek('${course}',${idx},event)"><i class="fas fa-plus"></i> Nova semana</button></div>
     </div>
   `;
 }
